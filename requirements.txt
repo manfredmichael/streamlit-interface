@@ -1,4 +1,8 @@
-streamlit>=0.88
-streamlit-drawable-canvas>=0.8
+streamlit==1.11.0
+streamlit-drawable-canvas==0.9.1
+streamlit-img-label
+pascal-voc-writer
 svgpathtools
 svgwrite
+opencv-python-headless
+matplotlib

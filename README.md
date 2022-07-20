@@ -1,5 +1,12 @@
-# Streamlit - Drawable Canvas - Demo
+---
+title: Tech Assesment Manfred
+emoji: 🐢
+colorFrom: pink
+colorTo: pink
+sdk: streamlit
+sdk_version: 1.10.0
+app_file: app.py
+pinned: false
+---
 
-Streamlit Drawable Canvas demo on Streamlit Sharing
-
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/andfanilo/streamlit-drawable-canvas-demo/master/app.py)
+Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
