@@ -54,8 +54,6 @@ def color_annotation_app():
     #
     """
     )
-
-    st.write(FILENAME)
     
     try:
         bg_image = Image.open(f"img/{FILENAME}.jpeg")
@@ -83,7 +81,7 @@ def color_annotation_app():
         if n_objects > 0:
             df = pd.DataFrame(rects).drop('label', axis=1)
             st.dataframe(df)
-            if n_objects >= 3:
+            f n_objects >= 3:
                 with st.form("my_form"):
 
                     # Every form must have a submit button.
