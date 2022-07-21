@@ -44,20 +44,20 @@ def transform_scale(df, size):
     return df
 
 
-def inference(annotations):
+def inference(annotations, filename):
     result = requests.post(
             f"http://{inference_url}:80/predict",
-        files = {'file': open(f"img/annotation.jpeg", 'rb'),
+        files = {'file': open(f"img/{filename}.jpeg", 'rb'),
                  'data': json.dumps({'annotations': annotations})
                 },
     )
 
     return result.json()
 
-def get_heatmap(annotations):
+def get_heatmap(annotations, filename):
     result = requests.post(
             f"http://{inference_url}:80/heatmap",
-        files = {'file': open(f"img/annotation.jpeg", 'rb'),
+        files = {'file': open(f"img/{filename}.jpeg", 'rb'),
                  'data': json.dumps({'annotations': annotations})
                 },
     )

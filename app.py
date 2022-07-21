@@ -54,10 +54,12 @@ def color_annotation_app():
     #
     """
     )
+
+    st.write(FILENAME)
     
     try:
-        bg_image = Image.open("img/annotation.jpeg")
-        im = ImageManager('img/annotation.jpeg')
+        bg_image = Image.open(f"img/{FILENAME}.jpeg")
+        im = ImageManager(f'img/{FILENAME}.jpeg')
     except:
         im = None
         bg_image = None 
@@ -66,9 +68,9 @@ def color_annotation_app():
     image_file = st.file_uploader('Upload your image', type=['jpg', 'jpeg', 'png'], accept_multiple_files=False)
     if image_file is not None: 
         bg_image = Image.open(image_file).convert('RGB')
-        bg_image.save('img/annotation.jpeg')
+        bg_image.save(f'img/{FILENAME}.jpeg')
 
-    im = ImageManager('img/annotation.jpeg')
+    im = ImageManager(f'img/{FILENAME}.jpeg')
     resized_img = im.resizing_img()
     resized_rects = im.get_resized_rects()
 
@@ -89,11 +91,11 @@ def color_annotation_app():
                     heatmap_button_clicked = st.form_submit_button("Show heatmaps")
                     if count_button_clicked:
                         annotations = transform_annotations(df)
-                        prediction = inference(annotations)
+                        prediction = inference(annotations, FILENAME)
                         st.write(prediction)
                     elif heatmap_button_clicked:
                         annotations = transform_annotations(df)
-                        prediction, heatmap = get_heatmap(annotations)
+                        prediction, heatmap = get_heatmap(annotations, FILENAME)
                         heatmap_image = add_heatmap_to_image(bg_image, heatmap)
                         st.write(f"predicted count: {round(prediction)}")
                         st.image(heatmap_image)
@@ -111,6 +113,11 @@ def color_annotation_app():
 
 if __name__ == "__main__":
     idm = ImageDirManager('img')
+
+    FILENAME = str(uuid.uuid4()) 
+
+    image = Image.open('img/annotation.jpeg').convert('RGB')
+    image.save(f'img/{FILENAME}.jpeg')
 
 
     st.set_page_config(
