@@ -76,7 +76,7 @@ def color_annotation_app():
     if im:
         rects = st_img_label(resized_img, box_color="red", rects=resized_rects)
         if len(rects) > 0:
-            df = pd.DataFrame(rects)
+            df = pd.DataFrame(rects).drop('label', axis=1)
             st.dataframe(df)
             n_objects = len(rects)
             if  n_objects < 3:
@@ -95,15 +95,8 @@ def color_annotation_app():
                     elif heatmap_button_clicked:
                         annotations = transform_annotations(df)
                         prediction, heatmap = get_heatmap(annotations)
-                        st.write(f"predicted count: {prediction}")
+                        st.write(f"predicted count: {round(prediction)}")
                         st.image(heatmap)
-
-
-            if len(df) == 0:
-                return
-
-def count_objects():
-    st.write('bla bla')
 
 
 if __name__ == "__main__":
