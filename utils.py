@@ -10,6 +10,13 @@ import os
 
 inference_url = 'ubuntu@ec2-108-137-44-0.ap-southeast-3.compute.amazonaws.com'
 
+def add_heatmap_to_image(pil_image, heatmap):
+    image = np.array(pil_image).astype(np.float32)
+    image /= 255.0
+    image = cv2.addWeighted(heatmap, 0.5, image, 0.5, 0)
+    image = np.clip(image, 0, 1)
+    return image
+
 def transform_annotations(df):
     df['x1'] = df['left'] 
     df['x2'] = (df['left'] + df['width'])
@@ -57,7 +64,7 @@ def get_heatmap(annotations):
 
     heatmap = result.json()['heatmap']
 
-    heatmap = np.array(heatmap) * 0.1
+    heatmap = np.array(heatmap) * 0.5
 
 
     colormap = plt.get_cmap('inferno')

@@ -15,7 +15,7 @@ from streamlit_drawable_canvas import st_canvas
 from streamlit_img_label import st_img_label
 from streamlit_img_label.manage import ImageManager, ImageDirManager
 
-from utils import transform_annotations, inference, transform_scale, get_heatmap
+from utils import transform_annotations, inference, get_heatmap, add_heatmap_to_image 
 
 
 def main():
@@ -95,23 +95,19 @@ def color_annotation_app():
                     elif heatmap_button_clicked:
                         annotations = transform_annotations(df)
                         prediction, heatmap = get_heatmap(annotations)
+                        heatmap_image = add_heatmap_to_image(bg_image, heatmap)
                         st.write(f"predicted count: {round(prediction)}")
-                        st.image(heatmap)
+                        st.image(heatmap_image)
 
             preview_imgs = im.init_annotation(rects)
+
+            st.write('cropped ROIs:')
 
             for i, prev_img in enumerate(preview_imgs):
                 prev_img[0].thumbnail((200, 200))
                 col1, col2 = st.columns(2)
                 with col1:
                     col1.image(prev_img[0])
-                # with col2:
-                #     default_index = 0
-
-                #     select_label = col2.selectbox(
-                #         "Label", labels, key=f"label_{i}", index=default_index
-                #     )
-                #     im.set_annotation(i, select_label)
 
 
 if __name__ == "__main__":
