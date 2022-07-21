@@ -75,13 +75,12 @@ def color_annotation_app():
 
     if im:
         rects = st_img_label(resized_img, box_color="red", rects=resized_rects)
-        if len(rects) > 0:
+        n_objects = len(rects)
+        if  n_objects < 3:
+            st.write('annotate at least {} more object(s)'.format(3 - n_objects))
+        if n_objects > 0:
             df = pd.DataFrame(rects).drop('label', axis=1)
             st.dataframe(df)
-            n_objects = len(rects)
-            if  n_objects < 3:
-                st.write('annotate at least {} more object(s)'.format(3 - n_objects))
-                pass
             else:
                 with st.form("my_form"):
 
