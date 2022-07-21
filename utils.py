@@ -7,6 +7,7 @@ import numpy as np
 import cv2
 import matplotlib.pyplot as plt
 import os
+import time
 
 inference_url = 'ubuntu@ec2-108-137-44-0.ap-southeast-3.compute.amazonaws.com'
 
@@ -45,14 +46,17 @@ def transform_scale(df, size):
 
 
 def inference(annotations, filename):
+    t0 = time.time()
     result = requests.post(
             f"http://{inference_url}:80/predict",
         files = {'file': open(f"img/{filename}.jpeg", 'rb'),
                  'data': json.dumps({'annotations': annotations})
                 },
     )
+    t = time.time() - t0
 
-    return result.json()
+
+    return result.json(), t
 
 def get_heatmap(annotations, filename):
     result = requests.post(

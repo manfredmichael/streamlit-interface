@@ -89,8 +89,9 @@ def color_annotation_app():
                     heatmap_button_clicked = st.form_submit_button("Show heatmaps")
                     if count_button_clicked:
                         annotations = transform_annotations(df)
-                        prediction = inference(annotations, FILENAME)
+                        prediction, latency = inference(annotations, FILENAME)
                         st.write(prediction)
+                        st.write(f'latency: {latency} s')
                     elif heatmap_button_clicked:
                         annotations = transform_annotations(df)
                         prediction, heatmap = get_heatmap(annotations, FILENAME)
