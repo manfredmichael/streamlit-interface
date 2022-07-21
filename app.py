@@ -98,6 +98,21 @@ def color_annotation_app():
                         st.write(f"predicted count: {round(prediction)}")
                         st.image(heatmap)
 
+            preview_imgs = im.init_annotation(rects)
+
+            for i, prev_img in enumerate(preview_imgs):
+                prev_img[0].thumbnail((200, 200))
+                col1, col2 = st.columns(2)
+                with col1:
+                    col1.image(prev_img[0])
+                # with col2:
+                #     default_index = 0
+
+                #     select_label = col2.selectbox(
+                #         "Label", labels, key=f"label_{i}", index=default_index
+                #     )
+                #     im.set_annotation(i, select_label)
+
 
 if __name__ == "__main__":
     idm = ImageDirManager('img')
