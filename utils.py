@@ -12,6 +12,7 @@ inference_url = 'ubuntu@ec2-108-137-44-0.ap-southeast-3.compute.amazonaws.com'
 
 def add_heatmap_to_image(pil_image, heatmap):
     image = np.array(pil_image).astype(np.float32)
+    image = cv2.resize(image, (heatmap.shape[1], heatmap.shape[0]), interpolation= cv2.INTER_LINEAR)
     image /= 255.0
     image = cv2.addWeighted(heatmap, 0.5, image, 0.5, 0)
     image = np.clip(image, 0, 1)
